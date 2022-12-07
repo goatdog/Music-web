@@ -30,9 +30,6 @@
 				$destinatin = $target_dir.$artist_photo;
 				
 				 if(move_uploaded_file($source, $destinatin)){
-				 	if(file_exists($target_dir.$a['artist_photo'])){
-				 		unlink($target_dir.$a['artist_photo']);
-				 	} 
 				 }else{ 
 				 	$artist_photo = $a['artist_photo'];
 				 }

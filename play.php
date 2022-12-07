@@ -1,20 +1,16 @@
 <?php 
 	session_start(); 
+	include 'files/functions.php';
+	
 	if(!isset($_SESSION['user'])){
 		message("Login before you play a song.","info");
 		header("Location: login.php");
 		die();
 	}
 
-
-	include 'files/functions.php';
-
 	$user_id = $_SESSION['user']['user_id'];
 	$song_id = $_GET['song'];
 	record_view($conn,$song_id,$user_id);
-
-
-
 
 
 	require_once("files/header.php"); 

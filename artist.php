@@ -67,7 +67,6 @@
 			  				<h2>Ooopps!</h2>
 			  				<hr>
 			  				<p>This artist has no song yet!</p>
-			  				<a href="index.php" class="btn btn-dark mt-3 mb-4 float-right" title="">Browse All Songs</a>
 			  			</div>
 		  			</div>
 

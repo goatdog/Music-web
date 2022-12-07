@@ -42,9 +42,6 @@
 				$destinatin = $target_dir.$song_photo;
 				
 				 if(move_uploaded_file($source, $destinatin)){
-				 	if(file_exists($target_dir.$song['song_photo'])){
-				 		unlink($target_dir.$song['song_photo']);
-				 	} 
 				 }else{ 
 				 	$song_photo = $song['song_photo'];
 				 }
