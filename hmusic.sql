@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2020 at 04:57 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.28
+-- Generation Time: Dec 08, 2022 at 01:53 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,22 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hmusic`
+-- Database: `hmusic2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artist`
+-- Table structure for table `artists`
 --
 
-CREATE TABLE `artist` (
+CREATE TABLE `artists` (
   `artist_id` int(11) NOT NULL,
-  `artist_name` varchar(45) DEFAULT NULL,
-  `artist_biography` text DEFAULT NULL,
-  `artist_details` varchar(45) DEFAULT NULL,
+  `artist_name` varchar(45) NOT NULL,
+  `artist_biography` text NOT NULL,
+  `artist_details` varchar(45) NOT NULL,
   `artist_photo` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -44,10 +43,10 @@ CREATE TABLE `artist` (
 
 CREATE TABLE `downloads` (
   `download_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `song_id` int(11) DEFAULT NULL,
-  `download_time` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int(11) NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `download_time` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -57,13 +56,15 @@ CREATE TABLE `downloads` (
 
 CREATE TABLE `songs` (
   `song_id` int(11) NOT NULL,
-  `song_mp3` text DEFAULT NULL,
-  `song_photo` text DEFAULT NULL,
-  `song_date` text DEFAULT NULL,
-  `aritst_id` varchar(35) DEFAULT NULL,
-  `song_name` varchar(225) NOT NULL,
+  `song_mp3` text NOT NULL,
+  `song_photo` text NOT NULL,
+  `song_date` text NOT NULL,
+  `aritst_id` int(11) NOT NULL,
+  `song_name` varchar(255) NOT NULL,
   `upload_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
@@ -71,14 +72,16 @@ CREATE TABLE `songs` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `password` text DEFAULT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
-  `reg_date` varchar(45) DEFAULT NULL,
-  `last_seen` varchar(45) DEFAULT NULL,
-  `photo` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `username` varchar(45) NOT NULL,
+  `password` text NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `reg_date` varchar(45) NOT NULL,
+  `last_seen` varchar(45) NOT NULL,
+  `photo` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `views`
@@ -86,29 +89,35 @@ CREATE TABLE `users` (
 
 CREATE TABLE `views` (
   `view_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `song_id` int(11) DEFAULT NULL,
-  `view_time` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+  `user_id` int(11) NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `view_time` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Indexes for table `artist`
+-- Indexes for dumped tables
 --
-ALTER TABLE `artist`
+
+--
+-- Indexes for table `artists`
+--
+ALTER TABLE `artists`
   ADD PRIMARY KEY (`artist_id`);
 
 --
 -- Indexes for table `downloads`
 --
 ALTER TABLE `downloads`
-  ADD PRIMARY KEY (`download_id`);
+  ADD PRIMARY KEY (`download_id`),
+  ADD KEY `user_id_fk2` (`user_id`),
+  ADD KEY `song_id_fk2` (`song_id`);
 
 --
 -- Indexes for table `songs`
 --
 ALTER TABLE `songs`
-  ADD PRIMARY KEY (`song_id`);
+  ADD PRIMARY KEY (`song_id`),
+  ADD KEY `artist_id_fk` (`aritst_id`);
 
 --
 -- Indexes for table `users`
@@ -120,41 +129,33 @@ ALTER TABLE `users`
 -- Indexes for table `views`
 --
 ALTER TABLE `views`
-  ADD PRIMARY KEY (`view_id`);
+  ADD PRIMARY KEY (`view_id`),
+  ADD KEY `user_id_fk` (`user_id`),
+  ADD KEY `song_id_fk` (`song_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `artist`
---
-ALTER TABLE `artist`
-  MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `downloads`
+-- Constraints for table `downloads`
 --
 ALTER TABLE `downloads`
-  MODIFY `download_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  ADD CONSTRAINT `song_id_fk2` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_id_fk2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- AUTO_INCREMENT for table `songs`
+-- Constraints for table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  ADD CONSTRAINT `artist_id_fk` FOREIGN KEY (`aritst_id`) REFERENCES `artists` (`artist_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `views`
+-- Constraints for table `views`
 --
 ALTER TABLE `views`
-  MODIFY `view_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  ADD CONSTRAINT `song_id_fk` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
