@@ -17,7 +17,9 @@
 
 	$song =$_GET['song'];
 	$s = get_top_song_by_song_id($conn,$song);
+	$cmts = get_cmt_by_song_id($conn, $song);
 	$artist_id = $s['artist_id'];
+	$format = "%H:%M:%S %d-%B-%Y";
 ?> 
 <!-- 
   [artist_id] => 4
@@ -75,16 +77,8 @@
 		  		</div>
 		  	</div>
 		  </li>
-
-
-	
  
 	</ul>
-
-
- 
-
-
 
 
 	<!-- Latest songs -->
@@ -117,7 +111,40 @@
 	</ul>
 
 
-</div>
+	<ul class="list-group mt-md-3">
+	  <li class="list-group-item">
+		<h2 class="display-4">Comments</h2>
+	  </li>
 
+	 <li class="list-group-item">
+			<form action="comments.php?song_id=<?php echo($s['song_id']); ?>" method="post">
+				<div>
+					<textarea name="cmt" id="cmt" rows="3" cols="110">Write something .... </textarea>
+				</div>
+				<input type="submit" value="Submit">
+			</form><br>
+	</li><br>
+
+		<?php $i = 0; foreach ($cmts as $key => $c):
+			$u = get_user_by_user_id($conn, $c['user_id']);
+			$username = $u['username'];
+	  	if($i > 10)
+	  		break;
+	  	$i++;
+	  ?> 
+
+	  <li class="list-group-item">
+			  <div class="row"> 
+			  		<div class="col-1"><?php echo $username ?></div>
+			  		<div class="col"><?php echo $strTime = strftime($format, $c['cmt_time']) ?></div>
+			  </div>
+				<div class="row">
+					<div class="col"><?php echo $c['cmt'] ?></div>
+				</div>
+	</li>
+
+	<?php endforeach ?>
+	  
+	</ul>
 
 <?php require_once("files/footer.php"); ?> 
