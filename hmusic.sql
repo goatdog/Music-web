@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `artists`
 --
 
-CREATE TABLE `artists` (
+CREATE TABLE `artist` (
   `artist_id` int(11) NOT NULL,
   `artist_name` varchar(45) NOT NULL,
   `artist_biography` text NOT NULL,
@@ -45,7 +45,8 @@ CREATE TABLE `comments` (
   `user_id` int(11) NOT NULL,
   `song_id` int(11) NOT NULL,
   `cmt` varchar(45) NOT NULL,
-  `cmt_time` varchar(45) NOT NULL
+  `cmt_time` varchar(45) NOT NULL,
+  `cmt_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -114,14 +115,14 @@ CREATE TABLE `views` (
 --
 -- Indexes for table `artists`
 --
-ALTER TABLE `artists`
+ALTER TABLE `artist`
   ADD PRIMARY KEY (`artist_id`);
 
 --
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`user_id`),
+  ADD PRIMARY KEY (`cmt_id`),
   ADD KEY `song_id_fk3` (`song_id`);
 
 --
@@ -175,7 +176,7 @@ ALTER TABLE `downloads`
 -- Constraints for table `songs`
 --
 ALTER TABLE `songs`
-  ADD CONSTRAINT `artist_id_fk` FOREIGN KEY (`aritst_id`) REFERENCES `artists` (`artist_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `artist_id_fk` FOREIGN KEY (`aritst_id`) REFERENCES `artist` (`artist_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `views`
