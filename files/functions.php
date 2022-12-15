@@ -22,6 +22,28 @@ function get_user_by_user_id($conn,$user_id){
  		return $data;
  	}
 }
+
+function get_category_by_id($conn,$category_id){
+	$sql = "SELECT * FROM category WHERE category_id = '{$category_id}'";
+ 	$res = $conn->query($sql);
+ 	$data = $res->fetch_assoc();
+ 	if($data==null){
+ 		return array(); 
+ 	}else{
+ 		return $data;
+ 	}
+}
+
+function get_category_by_name($conn,$category_name){
+	$sql = "SELECT * FROM category WHERE category_name = '{$category_name}'";
+ 	$res = $conn->query($sql);
+ 	$data = $res->fetch_assoc();
+ 	if($data==null){
+ 		return array(); 
+ 	}else{
+ 		return $data;
+ 	}
+}
 /*  
   
             [] => 1592902550_15623277316181_IMG_1965.jpeg
@@ -143,6 +165,19 @@ function get_cmt_by_song_id($conn, $song_id) {
   		array_push($cmts, $data);
  	}
  	return $cmts;
+}
+
+function get_songs_by_category($conn, $category_id) {
+	$sql = "SELECT * FROM songs 
+			WHERE category_id = {$category_id}";
+
+	$res = $conn->query($sql);
+	$songs = array();
+	
+	while ($data = $res->fetch_assoc()) {
+  		array_push($songs, $data);
+ 	}
+ 	return $songs;
 }
 
 function get_top_song_by_song_name($conn,$song_name){
@@ -271,6 +306,17 @@ function get_all_songs($conn,$upload_by = ""){
   		array_push($songs, $data);
  	}
  	return $songs;
+}
+
+function get_all_categories($conn){
+	$sql = "SELECT * FROM category";
+
+ 	$res = $conn->query($sql);
+ 	$c = array();  
+  	while ($data = $res->fetch_assoc()) {
+  		array_push($c, $data);
+ 	}
+ 	return $c;
 }
 
 function record_view($conn,$song_id,$user_id){
