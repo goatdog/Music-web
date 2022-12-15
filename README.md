@@ -15,14 +15,17 @@
     - Tìm kiếm nhạc và nghệ sĩ theo tên.
     - Phân loại bài hát theo nghệ sĩ sáng tác.
     - Hiển thị những bài hát đã nghe gần đây.
+    - Nhận xét về các bài hát đó.
 ## Database
   - Sơ đồ mô hình quan hệ:
-    ![317207105_3011445502334866_8053327140986237583_n](https://user-images.githubusercontent.com/98281111/207834946-80fecede-08b9-43f1-8236-e847f48387a8.png)
+  ![image](https://user-images.githubusercontent.com/98281111/207854679-3cfbc729-028a-44ea-b88e-b6cfab93a1c3.png)
+
   1. Bảng users lưu trữ thông tin người dùng.
   2. Bảng views lưu trữ thông tin về lượt nghe bài hát.
   3. Bảng artists lưu trữ thông tin về nghệ sĩ.
   4. Bảng downloads lưu trữ thông tin các lượt tải về.
   5. Bảng songs lưu trữ thông tin bài hát.
+  6. Bảng comments lưu trữ bình luận của các 
 ## Thiết kế website.
   - Sử dụng html, css, bootstrap cho phần frontend.
   - Sử dụng phpMyAdmin với ngôn ngữ mysql để truy vấn thông tin.
