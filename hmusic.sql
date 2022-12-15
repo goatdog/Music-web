@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 01:53 AM
+-- Generation Time: Dec 15, 2022 at 12:16 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hmusic2`
+-- Database: `hmusic`
 --
 
 -- --------------------------------------------------------
@@ -33,6 +33,19 @@ CREATE TABLE `artists` (
   `artist_biography` text NOT NULL,
   `artist_details` varchar(45) NOT NULL,
   `artist_photo` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `user_id` int(11) NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `cmt` varchar(45) NOT NULL,
+  `cmt_time` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -105,6 +118,13 @@ ALTER TABLE `artists`
   ADD PRIMARY KEY (`artist_id`);
 
 --
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `song_id_fk3` (`song_id`);
+
+--
 -- Indexes for table `downloads`
 --
 ALTER TABLE `downloads`
@@ -136,6 +156,13 @@ ALTER TABLE `views`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `song_id_fk3` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_id_fk3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `downloads`
