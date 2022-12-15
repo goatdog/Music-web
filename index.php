@@ -1,4 +1,4 @@
-<?php 
+    <?php 
 session_start(); 
 include 'files/functions.php';
 require_once("files/header.php"); 
@@ -12,7 +12,12 @@ $top_songs = get_top_songs($conn);
 	  </li>
 	  
 
-	  <?php $i = 0; foreach ($top_songs as $key => $s): 
+	  <?php $i = 0; foreach ($top_songs as $key => $s):
+	  	$c = get_category_by_id($conn, $s['category_id']);
+	  	$category_name = null;
+	  	if (empty($c)) {
+	  		$category_name = "Unknown";
+	  	} else $category_name = $c['category_name'];
 	  	if($i>9)
 	  		break;
 
@@ -30,6 +35,9 @@ $top_songs = get_top_songs($conn);
 			  				</div>
 			  				<div class="col-12">
 			  					<?php echo $s['artist_name']; ?>
+			  				</div>
+			  				<div class="col-12">
+			  					Category : <?php echo $category_name; ?>
 			  				</div>
 			  			</div>
 			  		</div>
