@@ -20,6 +20,13 @@
 	$cmts = get_cmt_by_song_id($conn, $song);
 	$artist_id = $s['artist_id'];
 	$format = "%H:%M:%S %d-%B-%Y";
+
+	$c = get_category_by_id($conn, $s['category_id']);
+	$category_name = null;
+	
+	if (empty($c)) {
+		$category_name = "Unknown";	  		
+	} else $category_name = $c['category_name'];		  	  	 	  	
 ?> 
 <!-- 
   [artist_id] => 4
@@ -56,6 +63,9 @@
 			  					<a class="text-dark" href="artist.php?artist_id=<?= $s['artist_id'] ?>" title="<?= $a['artist_name'] ?>"> 
 		  							<?php echo $s['artist_name']; ?> 
 		  						</a>
+		  				</div>
+		  				<div class="col-12">
+		  					<b>Category:</b> <?php echo $category_name; ?>
 		  				</div>
 		  				<div class="col-12">
 		  					<b>Views: </b> <?php echo $s['view_count']; ?>
