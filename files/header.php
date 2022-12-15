@@ -47,7 +47,10 @@
 	      	<?php if (isset($_SESSION['user'])){ ?>
 		        <a class="nav-link" href="logount_process.php">Logout</a>
 	      	<?php }else{ ?><?php } ?>
-	      </li>  	
+	      </li>
+	        <li class="nav-item">
+	        <a class="nav-link" href="playlist.php">Playlist</a>
+	      </li> 	
 	       <li class="nav-item">
 	        <a class="btn btn-dark btn-sm mt-1" href="admin_song_upload.php">UPLOAD NEW MUSIC</a>
 	      </li>  
