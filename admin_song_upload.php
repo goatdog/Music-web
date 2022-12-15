@@ -9,7 +9,8 @@
 	}
 
 	if(isset($_POST['song_name'])){
-		if (!empty($_POST['song_name']) && !empty($_POST['artist_name']) && isset($_FILES['song_photo']) && isset($_FILES['song_mp3']) && !empty($_FILES['song_photo']['name']) && !empty($_FILES['song_mp3']['name'])) {
+		if (!empty($_POST['song_name']) && !empty($_POST['artist_name']) && !empty($_POST['category_name']) &&isset($_FILES['song_photo']) && isset($_FILES['song_mp3']) && !empty($_FILES['song_photo']['name']) && !empty($_FILES['song_mp3']['name'])) {
+		
 		$artist_name = $_POST['artist_name'];
 		$a = get_artist_by_artist_name($conn, $artist_name);
 
@@ -22,6 +23,16 @@
 		$a = get_artist_by_artist_name($conn, $artist_name);
 		$artist_id = $a['artist_id'];
 
+		$category_name = $_POST['category_name'];
+		$c = get_category_by_name($conn, $category_name);
+
+		if(empty($c)) {
+			$sql = "INSERT INTO category(category_name)
+					VALUES ('{$category_name}')";
+			$temp = $conn->query($sql);
+		}
+
+		$c = get_category_by_name($conn, $category_name);
 
 		$file_name = "";  
 		$song_photo = "";
@@ -84,11 +95,13 @@
 		$song_date = time();
 
 		$song_name = $_POST['song_name'];
+
+		$category_id = $c['category_id'];
  		 
 		$SQL = "INSERT INTO songs(
-						song_mp3,song_photo,aritst_id,song_name,upload_by
+						song_mp3,song_photo,aritst_id,song_name,upload_by,category_id
 					)VALUES(
-						'{$song_mp3}','{$song_photo}','{$artist_id}','{$song_name}','{$upload_by}'
+						'{$song_mp3}','{$song_photo}','{$artist_id}','{$song_name}','{$upload_by}', '{$category_id}'
 					)
 				";
 
@@ -127,6 +140,11 @@
 			  <div class="form-group">
 			    <label for="artist_name">Artist name</label>
 			    <input type="text" name="artist_name" class="form-control" id="artist_name"  placeholder="Enter artist name"> 
+			  </div>
+
+			  <div class="form-group">
+			    <label for="category_name">Category</label>
+			    <input type="text" name="category_name" class="form-control" id="category_name"  placeholder="Enter category"> 
 			  </div>
  
  			  <div class="form-group">
