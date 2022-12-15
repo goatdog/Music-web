@@ -9,7 +9,8 @@
 	}
 
 	if(isset($_POST["song_name"])){ 
-		if (!empty($_POST['song_name']) && !empty($_POST['artist_name']) && isset($_FILES['song_photo']) && isset($_FILES['song_mp3']) && !empty($_FILES['song_photo']['name']) && !empty($_FILES['song_mp3']['name'])) {
+		if (!empty($_POST['song_name']) && !empty($_POST['artist_name']) && !empty($_POST['category_name']) &&isset($_FILES['song_photo']) && isset($_FILES['song_mp3']) && !empty($_FILES['song_photo']['name']) && !empty($_FILES['song_mp3']['name'])) {
+		
 		$artist_name = $_POST['artist_name'];
 		$a = get_artist_by_artist_name($conn, $artist_name);
 
@@ -20,6 +21,17 @@
 		}
 
 		$a = get_artist_by_artist_name($conn, $artist_name);
+
+		$category_name = $_POST['category_name'];
+		$c = get_category_by_name($conn, $category_name);
+
+		if(empty($c)) {
+			$sql = "INSERT INTO category(category_name)
+					VALUES ('{$category_name}')";
+			$temp = $conn->query($sql);
+		}
+
+		$c = get_category_by_name($conn, $category_name);
 
 		$song_id = $_POST['song_id'];
 		$song =  get_top_song_by_song_id($conn,$song_id);
@@ -75,12 +87,14 @@
 
 		$song_name = $_POST['song_name'];
 		$artist_id = $a['artist_id'];
+		$category_id = $c['category_id'];
 		
 		$sql = "UPDATE songs SET 
 					song_name = '{$song_name}',
 					aritst_id = '{$artist_id}',
 					song_photo = '{$song_photo}',
-					song_mp3 = '{$song_mp3}'
+					song_mp3 = '{$song_mp3}',
+					category_id = '{$category_id}'
 				WHERE 
 					song_id = '{$song_id}'
 		";
@@ -103,6 +117,8 @@
 	$song_id = $_GET['song_id'];
 
 	$song =  get_top_song_by_song_id($conn,$song_id);
+
+	$c = get_category_by_id($conn, $song['category_id']);
 ?>
 <?php require_once("files/header.php"); ?> 
 <div class="container">
@@ -127,12 +143,17 @@
 			    <label for="artist_name">Artist name</label>
 			    <input type="text" name="artist_name" value="<?php echo($song['artist_name']); ?>" class="form-control" id="artist_name"  placeholder="Enter artist name"> 
 			  </div>
+
+			  <div class="form-group">
+			    <label for="category_name">Category</label>
+			    <input type="text" name="category_name" value="<?php echo($c['category_name']); ?>" class="form-control" id="category_name"  placeholder="Enter category"> 
+			  </div>
  
  			  <div class="form-group">
 			   <div class="row">
 			   		<div class="col-md-6">
 			   			<label for="song_photo">Song photo</label>
-					    <input type="file"  name="song_photo" class="form-control" id="song_photo"> 
+					    <input type="file"  name="song_photo" class="form-control" id="song_photo" value="<?php echo($song['song_photo']); ?>"> 
 			   		</div>
 			   		<div class="col-md-6">
 			   			<img class="rounded" width="100" src="uploads/<?php echo($song['song_photo']); ?>" alt="">
@@ -145,7 +166,7 @@
 			   <div class="row">
 			   		<div class="col-md-6">
 					    <label for="song_mp3">Song mp3</label>
-					    <input type="file" accept=".mp3" name="song_mp3" class="form-control" id="song_mp3">
+					    <input type="file" accept=".mp3" name="song_mp3" class="form-control" id="song_mp3" value="<?php echo($song['song_mp3']); ?>">
 			   		</div>
 			   		<div class="col-md-6">
 			   			<br>
