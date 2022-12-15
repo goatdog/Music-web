@@ -11,6 +11,17 @@ function get_user_by_username($conn,$username){
  		return $data;
  	}
 }
+
+function get_user_by_user_id($conn,$user_id){
+	$sql = "SELECT * FROM users WHERE user_id = '{$user_id}'";
+ 	$res = $conn->query($sql);
+ 	$data = $res->fetch_assoc();
+ 	if($data==null){
+ 		return array(); 
+ 	}else{
+ 		return $data;
+ 	}
+}
 /*  
   
             [] => 1592902550_15623277316181_IMG_1965.jpeg
@@ -119,6 +130,19 @@ function get_top_song_by_song_id($conn,$song_id){
 	$song['download_count'] = get_song_downloads($conn,$song_id);
 
  	return $song;
+}
+
+function get_cmt_by_song_id($conn, $song_id) {
+	$sql = "SELECT * FROM comments
+			WHERE song_id = {$song_id}
+			ORDER BY cmt_time DESC";
+	$res = $conn->query($sql);
+	$cmts = array();
+	
+	while ($data = $res->fetch_assoc()) {
+  		array_push($cmts, $data);
+ 	}
+ 	return $cmts;
 }
 
 function get_top_song_by_song_name($conn,$song_name){
