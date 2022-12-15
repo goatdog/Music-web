@@ -25,7 +25,7 @@
   3. Bảng artists lưu trữ thông tin về nghệ sĩ.
   4. Bảng downloads lưu trữ thông tin các lượt tải về.
   5. Bảng songs lưu trữ thông tin bài hát.
-  6. Bảng comments lưu trữ bình luận của các 
+  6. Bảng comments lưu trữ bình luận của người dùng.
 ## Thiết kế website.
   - Sử dụng html, css, bootstrap cho phần frontend.
   - Sử dụng phpMyAdmin với ngôn ngữ mysql để truy vấn thông tin.
