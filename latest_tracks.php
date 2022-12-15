@@ -20,6 +20,11 @@
 	  
 
 	  <?php $i = 0; foreach ($songs as $key => $s): 
+	  	$c = get_category_by_id($conn, $s['category_id']);
+	  	$category_name = null;
+	  	if (empty($c)) {
+	  		$category_name = "Unknown";
+	  	} else $category_name = $c['category_name'];
 	  	$i++;
 	  ?>
 	  		  <li class="list-group-item">
@@ -34,6 +39,9 @@
 			  				</div>
 			  				<div class="col-12">
 			  					<?php echo $s['artist_name']; ?>
+			  				</div>
+			  				<div class="col-12">
+			  					Category : <?php echo $category_name; ?>
 			  				</div>
 			  			</div>
 			  		</div>
