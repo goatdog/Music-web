@@ -5,7 +5,7 @@
   - Vũ Thế Hoàn 21020321
 ## Mô tả Website
   - Link Website demo: https://hmusicdxh.000webhostapp.com/index.php
-  ![image](https://user-images.githubusercontent.com/98281111/207835092-b4e3d8a9-7c41-4c92-88e1-6142975cd25d.png)
+  ![image](https://user-images.githubusercontent.com/98281111/208007891-a1dcca00-2918-4988-a93f-042de538e703.png)
   - Mục đích: Nghe và chia sẻ âm nhạc
   - Chức năng:
     - Có thể đăng kí, đăng nhập và đăng xuất tài khoản của mình.
