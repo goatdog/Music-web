@@ -13,7 +13,7 @@
     - Nghe và tải các bài hát về thiết bị của mình.
     - Xếp hạng các bài hát dựa theo số lượt nghe và lượt tải về.
     - Tìm kiếm nhạc và nghệ sĩ theo tên và thể loại.
-    - Phân loại bài hát theo nghệ sĩ sáng tác.
+    - Phân loại bài hát theo nghệ sĩ sáng tác, thể loại nhạc.
     - Hiển thị những bài hát đã nghe gần đây.
     - Nhận xét về các bài hát đó.
 ## Database
